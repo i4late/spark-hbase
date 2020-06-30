@@ -1,152 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
 <configuration>
-<property>
-        <name>hadoop.proxyuser.root.hosts</name>
-        <value>*</value>
-</property>
-<property>
-        <name>hadoop.proxyuser.root.groups</name>
-        <value>*</value>
-</property>
-<property>
-	<name>emr.cfs.io.blocksize</name>
-	<value>1048576</value>
-</property>
-<property>
-	<name>hadoop.http.staticuser.user</name>
-	<value>hadoop</value>
-</property>
-<property>
-	<name>hadoop.logfile.count</name>
-	<value>20</value>
-</property>
-<property>
-	<name>hadoop.proxyuser.hadoop.groups</name>
-	<value>*</value>
-</property>
-<property>
-	<name>ha.health-monitor.rpc-timeout.ms</name>
-	<value>180000</value>
-</property>
-<property>
-	<name>fs.cosn.copy_thread_pool</name>
-	<value>2</value>
-</property>
-<property>
-	<name>fs.cosn.impl</name>
-	<value>org.apache.hadoop.fs.cosnative.NativeCosFileSystem</value>
-</property>
-<property>
-	<name>hadoop.logfile.size</name>
-	<value>1000000000</value>
-</property>
-<property>
-	<name>fs.ofs.tmp.cache.dir</name>
-	<value></value>
-</property>
-<property>
-	<name>fs.cos.local_block_size</name>
-	<value>67108864</value>
-</property>
-<property>
-	<name>fs.defaultFS</name>
-	<value>hdfs://HDFS80377</value>
-</property>
-<property>
-	<name>fs.ofs.user.appid</name>
-	<value>1255613256</value>
-</property>
-<property>
-	<name>fs.ofs.impl</name>
-	<value>com.qcloud.chdfs.fs.CHDFSHadoopFileSystemAdapter</value>
-</property>
-<property>
-	<name>emr.cfs.write.level</name>
-	<value>2</value>
-</property>
-<property>
-	<name>fs.cosn.block.size</name>
-	<value>67108864</value>
-</property>
-<property>
-	<name>fs.cosn.local_block_size</name>
-	<value>2097152</value>
-</property>
-<property>
-	<name>hadoop.http.filter.initializers</name>
-	<value>org.apache.hadoop.security.HttpCrossOriginFilterInitializer</value>
-</property>
-<property>
-	<name>io.compression.codec.lzo.class</name>
-	<value>com.hadoop.compression.lzo.LzoCodec</value>
-</property>
-<property>
-	<name>ha.zookeeper.session-timeout.ms</name>
-	<value>180000</value>
-</property>
-<property>
-	<name>io.compression.codecs</name>
-	<value>org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.GzipCodec,com.hadoop.compression.lzo.LzoCodec,com.hadoop.compression.lzo.LzopCodec,org.apache.hadoop.io.compress.SnappyCodec</value>
-</property>
-<property>
-	<name>fs.cos.userinfo.secretId</name>
-	<value>AKIDr496sdy572YwAZPuqjbQ60kNsCMOh4h7</value>
-</property>
-<property>
-	<name>fs.cosn.userinfo.region</name>
-	<value>ap-beijing</value>
-</property>
-<property>
-	<name>emr.cfs.exportedpath</name>
-	<value></value>
-</property>
-<property>
-	<name>emr.cfs.group.id.map</name>
-	<value>root:0;hadoop:500</value>
-</property>
-<property>
-	<name>fs.cos.userinfo.useCDN</name>
-	<value>false</value>
-</property>
-<property>
-	<name>hadoop.tmp.dir</name>
-	<value>/data/emr/hdfs/tmp</value>
-</property>
-<property>
-	<name>fs.trash.interval</name>
-	<value>1440</value>
-</property>
-<property>
-	<name>emr.cfs.endpoint</name>
-	<value></value>
-</property>
-<property>
-	<name>emr.cfs.user.id.map</name>
-	<value>root:0;hadoop:500</value>
-</property>
-<property>
-	<name>fs.cfs.impl</name>
-	<value>com.tencent.cloud.emr.CFSFileSystem</value>
-</property>
-<property>
-	<name>fs.cos.buffer.dir</name>
-	<value>data/emr/hdfs/tmp</value>
-</property>
-<property>
-	<name>fs.cos.userinfo.secretKey</name>
-	<value>QhmgT8io6HetxsV2OvLafYJtaBYq11pZ</value>
-</property>
-<property>
-	<name>hadoop.proxyuser.hadoop.hosts</name>
-	<value>*</value>
-</property>
-<property>
-	<name>fs.AbstractFileSystem.ofs.impl</name>
-	<value>com.qcloud.chdfs.fs.CHDFSDelegateFSAdapter</value>
-</property>
-<property>
-        <name>io.compression.codec.lzo.class</name>
-        <value>com.hadoop.compression.lzo.LzoCodec</value>
-</property>
+  <property>
+    <name>hadoop.proxyuser.root.hosts</name>
+    <value>*</value>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.root.groups</name>
+    <value>*</value>
+  </property>
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://localhost:9000</value>   
+   </property>
 </configuration>

@@ -1,199 +1,78 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
-<configuration><property>
-	<name>hbase.client.write.buffer</name>
-	<value>6291456</value>
-</property>
+<!--
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<configuration>
+  <!--
+    The following properties are set for running HBase as a single process on a
+    developer workstation. With this configuration, HBase is running in
+    "stand-alone" mode and without a distributed file system. In this mode, and
+    without further configuration, HBase and ZooKeeper data are stored on the
+    local filesystem, in a path under the value configured for `hbase.tmp.dir`.
+    This value is overridden from its default value of `/tmp` because many
+    systems clean `/tmp` on a regular basis. Instead, it points to a path within
+    this HBase installation directory.
+
+    Running against the `LocalFileSystem`, as opposed to a distributed
+    filesystem, runs the risk of data integrity issues and data loss. Normally
+    HBase will refuse to run in such an environment. Setting
+    `hbase.unsafe.stream.capability.enforce` to `false` overrides this behavior,
+    permitting operation. This configuration is for the developer workstation
+    only and __should not be used in production!__
+
+    See also https://hbase.apache.org/book.html#standalone_dist
+  -->
+<!-- 指定HRegion服务器的位置，即数据存放位置  -->
 <property>
-	<name>hbase.hregion.max.filesize</name>
-	<value>10737418240</value>
+    <name>hbase.rootdir</name>
+    <value>hdfs://localhost:9000/hbase</value>
 </property>
+<!-- 指定HLog和Hfile的副本个数  -->
 <property>
-	<name>hbase.regionserver.lease.period</name>
-	<value>1800000</value>
+    <name>dfs.replication</name>
+    <value>1</value>
 </property>
-<property>
-	<name>hbase.regionserver.wal.max.splitters</name>
-	<value>8</value>
-</property>
-<property>
-	<name>hbase.rootdir</name>
-	<value>hdfs://HDFS80377/hbase</value>
-</property>
-<property>
-	<name>hbase.zookeeper.quorum</name>
-	<value>10.2.40.12,10.2.40.11,10.2.40.8</value>
-</property>
-<property>
-	<name>hbase.client.scanner.timeout.period</name>
-	<value>1800000</value>
-</property>
-<property>
-	<name>hbase.cluster.distributed</name>
-	<value>true</value>
-</property>
-<property>
-	<name>hbase.quota.refresh.period</name>
-	<value>60000</value>
-</property>
-<property>
-	<name>hbase.regionserver.executor.closeregion.threads</name>
-	<value>20</value>
-</property>
-<property>
-	<name>hbase.regionserver.handler.count</name>
-	<value>128</value>
-</property>
-<property>
-	<name>dfs.client.use.datanode.hostname</name>
-	<value>false</value>
-</property>
-<property>
-	<name>hbase.ipc.server.max.callqueue.size</name>
-	<value>2147483647</value>
-</property>
-<property>
-	<name>phoenix.coprocessor.maxMetaDataCacheTimeToLiveMs	</name>
-	<value>1800000</value>
-</property>
-<property>
-	<name>phoenix.schema.isNamespaceMappingEnabled</name>
-	<value>true</value>
-</property>
-<property>
-	<name>hbase.master.info.port</name>
-	<value>6001</value>
-</property>
-<property>
-	<name>hbase.hregion.memstore.block.multiplier</name>
-	<value>4</value>
-</property>
-<property>
-	<name>hbase.hstore.compaction.max</name>
-	<value>30</value>
-</property>
-<property>
-	<name>hbase.regionserver.global.memstore.lowerLimit</name>
-	<value>0.38</value>
-</property>
-<property>
-	<name>hbase.regionserver.thread.compaction.large</name>
-	<value>6</value>
-</property>
-<property>
-	<name>hbase.server.thread.wakefrequency</name>
-	<value>2000</value>
-</property>
-<property>
-	<name>hbase.client.operation.timeout</name>
-	<value>1800000</value>
-</property>
-<property>
-	<name>hbase.hstore.compactionThreshold</name>
-	<value>128</value>
-</property>
-<property>
-	<name>hbase.regionserver.wal.codec</name>
-	<value>org.apache.hadoop.hbase.regionserver.wal.IndexedWALEditCodec</value>
-</property>
-<property>
-	<name>hbase.rpc.timeout</name>
-	<value>60000</value>
-</property>
-<property>
-	<name>hbase.storescanner.parallel.seek.threads</name>
-	<value>20</value>
-</property>
-<property>
-	<name>phoenix.query.keepAliveMs</name>
-	<value>1800000</value>
-</property>
-<property>
-	<name>hbase.zookeeper.property.clientPort</name>
-	<value>2181</value>
-</property>
-<property>
-	<name>hbase.master.port</name>
-	<value>6000</value>
-</property>
-<property>
-	<name>hbase.regionserver.thrift.port</name>
-	<value>6004</value>
-</property>
-<property>
-	<name>dfs.client.failover.proxy.provider.HDFS80377</name>
-	<value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
-</property>
-<property>
-	<name>hbase.quota.enabled</name>
-	<value>true</value>
-</property>
-<property>
-	<name>hbase.region.server.rpc.scheduler.factory.class</name>
-	<value>org.apache.hadoop.hbase.ipc.PhoenixRpcSchedulerFactory</value>
-</property>
-<property>
-	<name>hbase.regionserver.executor.openregion.threads</name>
-	<value>20</value>
-</property>
-<property>
-	<name>hbase.regionserver.thread.compaction.small</name>
-	<value>10</value>
-</property>
-<property>
-	<name>hfile.block.cache.size</name>
-	<value>0.4</value>
-</property>
-<property>
-	<name>phoenix.coprocessor.maxServerCacheTimeToLiveMs</name>
-	<value>1800000</value>
-</property>
-<property>
-	<name>hbase.hstore.blockingStoreFiles</name>
-	<value>64</value>
-</property>
-<property>
-	<name>hbase.hstore.flusher.count</name>
-	<value>8</value>
-</property>
-<property>
-	<name>hbase.regionserver.metahandler.count</name>
-	<value>100</value>
-</property>
-<property>
-	<name>phoenix.query.timeoutMs</name>
-	<value>1800000</value>
-</property>
-<property>
-	<name>zookeeper.session.timeout</name>
-	<value>120000</value>
-</property>
-<property>
-	<name>hbase.hregion.memstore.flush.size</name>
-	<value>134217728</value>
-</property>
-<property>
-	<name>hbase.hstore.blockingWaitTime</name>
-	<value>60000</value>
-</property>
-<property>
-	<name>hbase.regionserver.global.memstore.size</name>
-	<value>0.4</value>
-</property>
-<property>
-	<name>hbase.regionserver.thread.split</name>
-	<value>5</value>
-</property>
-<property>
-	<name>hbase.master.hostname</name>
-	<value>10.2.40.5</value>
-</property>
-<property>
-	<name>hbase.thrift.info.port</name>
-	<value>6005</value>
-</property>
-<property>
-        <name>phoenix.trace.frequency</name>
-    <value>always</value>
+
+  <property>
+    <name>hbase.cluster.distributed</name>
+    <value>true</value>
+  </property>
+
+  <property>
+     <name>hbase.zookeeper.property.clientPort</name>
+     <value>2181</value>
+  </property>
+  <property>
+     <name>hbase.zookeeper.quorum</name>
+     <value>localhost</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.property.dataDir</name>
+    <value>/usr/hbase/zkData</value>
+  </property>
+  <property>
+    <name>hbase.tmp.dir</name>
+    <value>./tmp</value>
+  </property>
+  <property>
+    <name>hbase.unsafe.stream.capability.enforce</name>
+    <value>false</value>
   </property>
 </configuration>
