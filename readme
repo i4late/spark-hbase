@@ -1,0 +1,1 @@
+create table s_user (age int, birthday string,industry string )  ROW FORMAT DELIMITED FIELDS TERMINATED BY "\t" STORED AS ORC
