@@ -1,6 +1,8 @@
 package com.missfresh.core
 
 
+import java.io.{File, FileInputStream}
+
 import com.missfresh.utils.SpeedyConfig
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.Path
@@ -17,15 +19,18 @@ import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor
 
 /**
  * 需将core-site.xml&hdfs-site.xml&hbase-site.xml & hive-site.xml 文件放在资源目录resources下
+ * 注意将hive-site 里关于tez的配置去掉
  */
 object SparkReadHbase {
   def main(args: Array[String]): Unit = {
     assert(args.size == 1, "需要指定配置文件名称")
-    val stream = getClass().getClassLoader().getResourceAsStream(args(0))
+    //val stream = getClass().getClassLoader().getResourceAsStream(args(0))
     //val stream = ClassLoader.getSystemResourceAsStream(args(0))
     //val yaml = new Yaml(new Constructor(classOf[com.missfresh.utils.SpeedyConfig]))
-    val yaml = new Yaml(new CustomClassLoaderConstructor(classOf[SpeedyConfig], Thread.currentThread.getContextClassLoader))
-    val config: SpeedyConfig = yaml.load(stream).asInstanceOf[com.missfresh.utils.SpeedyConfig]
+    val stream = new FileInputStream(new File(args(0)))
+    //val yaml = new Yaml(new CustomClassLoaderConstructor(classOf[SpeedyConfig], Thread.currentThread.getContextClassLoader))
+    val yaml = new Yaml()
+    val config: SpeedyConfig = yaml.loadAs(stream ,classOf[com.missfresh.utils.SpeedyConfig])
     assert(null != config.getObjectVO, "需要同步表的schema为空")
     assert(null != config.getJobName, "spark 作业名称为空")
     assert(null != config.getColFamily, "hbase cf 为空")
@@ -41,7 +46,7 @@ object SparkReadHbase {
 
     // 获取HbaseRDD
     val job = Job.getInstance(getHbaseConf())
-    TableSnapshotInputFormat.setInput(job, config.getSnapshotFile, new Path(config.getSnapshotPath))
+    TableSnapshotInputFormat.setInput(job, config.getSnapshotFile, new Path("/user/tmp"))
 
     val hbaseRDD = spark.sparkContext.newAPIHadoopRDD(job.getConfiguration,
       classOf[TableSnapshotInputFormat],
@@ -57,13 +62,13 @@ object SparkReadHbase {
     dataDF.createOrReplaceTempView("hbase_" + config.getSnapshotFile)
     val tabAllColArray = spark.table(config.getTargetTable).columns
     val tmpColArray = config.getObjectVO.keySet().toArray()
-    val diffCol = tabAllColArray.diff(tmpColArray)
+    val diffCol = tabAllColArray.diff(tmpColArray.map(v =>v.toString.toLowerCase))
     println("目标表字段: " + tabAllColArray.mkString(","))
     println("配置字段: " + tmpColArray.mkString(","))
     println("目标表字段数: " + tabAllColArray.size + " ,配置字段数: " + tmpColArray.size + " ,相差字段: [" + diffCol.mkString(",") + " ]")
     if (diffCol.size > 0) {
-      spark.stop()
-      System.exit(1)
+      //spark.stop()
+      //System.exit(1)
     }
     val sql = "INSERT OVERWRITE TABLE  " + config.getTargetTable + "  select " + tabAllColArray.mkString(",") + " from hbase_" + config.getSnapshotFile
     println("执行sql 为:" + sql)
